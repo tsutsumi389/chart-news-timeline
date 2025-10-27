@@ -5,6 +5,7 @@
 - **フレームワーク**: React + TypeScript
 - **チャートライブラリ**: Apache ECharts
 - **ビルドツール**: Vite
+- **開発環境**: Docker + Docker Compose
 
 ---
 
@@ -26,8 +27,99 @@ chart-news-timeline/
 │   │   └── main.tsx
 │   ├── package.json
 │   ├── tsconfig.json
-│   └── vite.config.ts
+│   ├── vite.config.ts
+│   ├── Dockerfile                   # Docker設定
+│   └── .dockerignore
+├── compose.yml                      # Docker Compose設定
 └── README.md
+```
+
+---
+
+## Docker構成
+
+### Dockerfile（frontend/Dockerfile）
+
+```dockerfile
+FROM node:24-alpine
+
+WORKDIR /app
+
+# パッケージファイルをコピー
+COPY package*.json ./
+
+# 依存関係をインストール
+RUN npm install
+
+# アプリケーションコードをコピー
+COPY . .
+
+# Viteの開発サーバーを起動
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+```
+
+### compose.yml
+
+```yaml
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: chart-news-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: rebuild
+          path: ./frontend/package.json
+```
+
+### .dockerignore（frontend/.dockerignore）
+
+```
+node_modules
+dist
+.git
+.gitignore
+README.md
+npm-debug.log
+```
+
+---
+
+## Docker起動方法
+
+```bash
+# コンテナのビルドと起動
+docker compose up -d
+
+# Watch モードで起動（ファイル変更を自動検知）
+docker compose up --watch
+
+# ログの確認
+docker compose logs -f frontend
+
+# コンテナの停止
+docker compose down
+
+# コンテナ内でコマンド実行
+docker compose exec frontend npm install <package-name>
+
+# コンテナの再ビルド
+docker compose build --no-cache
 ```
 
 ---
@@ -151,19 +243,27 @@ export const sampleStockData: CandlestickData[] = [
 
 ## 実装手順
 
-### Step 1: プロジェクトセットアップ
+### Step 1: Docker環境セットアップ
+- [ ] compose.yml 作成
+- [ ] Dockerfile 作成（frontend/Dockerfile）
+- [ ] .dockerignore 作成
+
+### Step 2: プロジェクトセットアップ
 - [ ] Vite + React + TypeScript プロジェクト作成
 - [ ] Apache ECharts インストール
 - [ ] ディレクトリ構造作成
+- [ ] Vite設定をDocker用に調整
 
-### Step 2: チャート実装
+### Step 3: チャート実装
 - [ ] 型定義ファイル作成 (types/stock.ts)
 - [ ] サンプルデータ作成 (data/sampleData.ts)
 - [ ] StockChartコンポーネント作成
 - [ ] ローソク足チャート表示
 - [ ] ズーム・パン機能確認
 
-### Step 3: 動作確認
+### Step 4: Docker起動と動作確認
+- [ ] docker compose up --watch でコンテナ起動
+- [ ] http://localhost:5173 でアクセス確認
 - [ ] サンプルデータでの表示確認
 - [ ] インタラクション（ズーム、パン）確認
 
