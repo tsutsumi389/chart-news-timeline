@@ -255,11 +255,11 @@ export const sampleStockData: CandlestickData[] = [
 - [x] Vite設定をDocker用に調整
 
 ### Step 3: チャート実装
-- [ ] 型定義ファイル作成 (types/stock.ts)
-- [ ] サンプルデータ作成 (data/sampleData.ts)
-- [ ] StockChartコンポーネント作成
-- [ ] ローソク足チャート表示
-- [ ] ズーム・パン機能確認
+- [x] 型定義ファイル作成 (types/stock.ts)
+- [x] サンプルデータ作成 (data/sampleData.ts)
+- [x] StockChartコンポーネント作成
+- [x] ローソク足チャート表示
+- [x] ズーム・パン機能確認
 
 ### Step 4: Docker起動と動作確認
 - [ ] docker compose up --watch でコンテナ起動
