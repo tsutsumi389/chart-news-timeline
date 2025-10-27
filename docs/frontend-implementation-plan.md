@@ -244,9 +244,9 @@ export const sampleStockData: CandlestickData[] = [
 ## 実装手順
 
 ### Step 1: Docker環境セットアップ
-- [ ] compose.yml 作成
-- [ ] Dockerfile 作成（frontend/Dockerfile）
-- [ ] .dockerignore 作成
+- [x] compose.yml 作成
+- [x] Dockerfile 作成（frontend/Dockerfile）
+- [x] .dockerignore 作成
 
 ### Step 2: プロジェクトセットアップ
 - [ ] Vite + React + TypeScript プロジェクト作成
