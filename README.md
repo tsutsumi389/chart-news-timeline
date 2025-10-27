@@ -30,43 +30,31 @@
 - ニュース情報のタイムラインマーカー表示
 - インタラクティブな操作（ズーム、パン等）
 
-## 技術スタック（検討中）
+## 技術スタック
 
-以下の技術スタックを検討中です：
+### フロントエンド（決定）
+- **フレームワーク**: React + TypeScript
+- **チャートライブラリ**: Apache ECharts
+- **ビルドツール**: Vite
+- **状態管理**: React Hooks
+- **スタイリング**: CSS Modules または Tailwind CSS（検討中）
 
-### バックエンド候補
+#### 選定理由
+- **Apache ECharts**: 吹き出し機能（tooltip）が標準装備で、ニュースマーカー表示が容易
+- **React + TypeScript**: 型安全性とコンポーネント再利用性
+- **Vite**: 高速な開発サーバーとビルド
+
+### バックエンド（後期実装予定）
+以下から選定予定：
 - Node.js + Express
 - Python + FastAPI
 - Go
 
-### フロントエンド候補
-- React + TypeScript
-- Vue.js
-- Next.js
-
-### データベース候補
+### データベース（後期実装予定）
+以下から選定予定：
 - PostgreSQL
 - MySQL
 - SQLite
-
-### チャートライブラリ候補
-- Chart.js
-- D3.js
-- Lightweight Charts
-- TradingView Charting Library
-
-## 開発予定
-
-1. 技術スタックの選定
-2. データベーススキーマの設計
-3. データインポート機能の実装
-4. チャート描画機能の実装
-5. ニュース表示機能の統合
-6. UI/UXの改善
-
-## セットアップ
-
-（技術スタック確定後に記載予定）
 
 ## ライセンス
 
