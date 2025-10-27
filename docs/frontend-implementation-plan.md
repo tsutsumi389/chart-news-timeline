@@ -249,10 +249,10 @@ export const sampleStockData: CandlestickData[] = [
 - [x] .dockerignore 作成
 
 ### Step 2: プロジェクトセットアップ
-- [ ] Vite + React + TypeScript プロジェクト作成
-- [ ] Apache ECharts インストール
-- [ ] ディレクトリ構造作成
-- [ ] Vite設定をDocker用に調整
+- [x] Vite + React + TypeScript プロジェクト作成
+- [x] Apache ECharts インストール
+- [x] ディレクトリ構造作成
+- [x] Vite設定をDocker用に調整
 
 ### Step 3: チャート実装
 - [ ] 型定義ファイル作成 (types/stock.ts)
