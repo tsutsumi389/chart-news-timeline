@@ -424,8 +424,8 @@ frontend/
 ## 実装手順
 
 ### Step 1: 型定義の拡張
-- [ ] `types/stock.ts` に `NewsItem` 型を追加
-- [ ] `types/stock.ts` に `SentimentConfig` 型を追加
+- [x] `types/stock.ts` に `NewsItem` 型を追加
+- [x] `types/stock.ts` に `SentimentConfig` 型を追加
 
 ### Step 2: データとユーティリティの作成
 - [ ] `data/sentimentConfig.ts` 作成（センチメント設定）
