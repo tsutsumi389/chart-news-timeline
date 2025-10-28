@@ -428,9 +428,9 @@ frontend/
 - [x] `types/stock.ts` に `SentimentConfig` 型を追加
 
 ### Step 2: データとユーティリティの作成
-- [ ] `data/sentimentConfig.ts` 作成（センチメント設定）
-- [ ] `data/sampleNewsData.ts` 作成（サンプルニュースデータ）
-- [ ] `utils/chartOptions.ts` 作成（チャート設定ロジック）
+- [x] `data/sentimentConfig.ts` 作成（センチメント設定）
+- [x] `data/sampleNewsData.ts` 作成（サンプルニュースデータ）
+- [x] `utils/chartOptions.ts` 作成（チャート設定ロジック）
 
 ### Step 3: チャートコンポーネントの更新
 - [ ] `StockChart.tsx` を更新してニュースデータを受け取る
