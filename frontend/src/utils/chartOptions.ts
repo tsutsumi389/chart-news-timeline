@@ -20,10 +20,11 @@ const createNewsScatterData = (newsData: NewsItem[], priceMap: { [date: string]:
   return newsData.map(news => {
     // その日の最高値を取得（なければ0）
     const price = priceMap[news.date] || 0;
+    const sentimentLabel = sentimentConfig[news.sentiment].label;
 
     return {
       value: [news.date, price],
-      // カスタムデータを保存（ツールチップで使用）
+      // カスタムデータを保存
       newsData: news,
       itemStyle: {
         color: sentimentConfig[news.sentiment].color,
@@ -34,6 +35,7 @@ const createNewsScatterData = (newsData: NewsItem[], priceMap: { [date: string]:
         show: true,
         position: 'top',
         distance: 10,
+        // 通常時：短いタイトルのみ表示
         formatter: () => news.title.substring(0, 15) + (news.title.length > 15 ? '...' : ''),
         backgroundColor: sentimentConfig[news.sentiment].color,
         color: '#fff',
@@ -48,12 +50,45 @@ const createNewsScatterData = (newsData: NewsItem[], priceMap: { [date: string]:
       emphasis: {
         label: {
           show: true,
-          fontSize: 12
+          // hover時：吹き出しを拡張して詳細情報を表示
+          formatter: () => {
+            const lines = [
+              `${news.title}`,
+              '',
+              `📅 ${news.date} ${news.time || ''}`,
+            ];
+
+            if (news.summary) {
+              lines.push('');
+              lines.push(news.summary);
+            }
+
+            lines.push('');
+            let lastLine = `🏷 ${sentimentLabel}`;
+            if (news.source) {
+              lastLine += ` | 📰 ${news.source}`;
+            }
+            lines.push(lastLine);
+
+            return lines.join('\n');
+          },
+          backgroundColor: sentimentConfig[news.sentiment].color,
+          color: '#fff',
+          padding: [12, 16],
+          borderRadius: 8,
+          fontSize: 12,
+          lineHeight: 18,
+          fontWeight: 'normal',
+          width: 280,  // 拡張時の幅を指定
+          overflow: 'break',  // 自動折り返し
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 12,
+          shadowOffsetY: 3
         },
         itemStyle: {
           borderWidth: 3,
-          shadowColor: 'rgba(0, 0, 0, 0.3)',
-          shadowBlur: 8
+          shadowColor: 'rgba(0, 0, 0, 0.4)',
+          shadowBlur: 12
         }
       }
     };
@@ -62,42 +97,16 @@ const createNewsScatterData = (newsData: NewsItem[], priceMap: { [date: string]:
 
 /**
  * ツールチップのカスタムフォーマッター
+ * ニュースは吹き出しで表示されるため、ローソク足のみツールチップを表示
  */
 const createTooltipFormatter = () => {
   return (params: any) => {
     // 配列の場合は最初の要素を取得
     const param = Array.isArray(params) ? params[0] : params;
 
-    // ニュースのscatterシリーズの場合
-    if (param.seriesName === 'ニュース' && param.data?.newsData) {
-      const newsData: NewsItem = param.data.newsData;
-      const sentimentLabel = sentimentConfig[newsData.sentiment].label;
-
-      return `
-        <div style="padding: 12px; max-width: 350px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-          <div style="font-weight: bold; margin-bottom: 8px; font-size: 15px; color: #333;">
-            ${newsData.title}
-          </div>
-          <div style="color: #666; font-size: 12px; margin-bottom: 10px;">
-            📅 ${newsData.date} ${newsData.time || ''}
-          </div>
-          ${newsData.summary ? `
-            <div style="margin-bottom: 10px; line-height: 1.5; color: #555; font-size: 13px;">
-              ${newsData.summary}
-            </div>
-          ` : ''}
-          <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
-            <span style="display: inline-block; padding: 4px 12px; background: ${sentimentConfig[newsData.sentiment].color}; color: white; border-radius: 5px; font-size: 11px; font-weight: bold;">
-              ${sentimentLabel}
-            </span>
-            ${newsData.source ? `
-              <span style="color: #999; font-size: 11px;">
-                📰 ${newsData.source}
-              </span>
-            ` : ''}
-          </div>
-        </div>
-      `;
+    // ニュースの場合はツールチップを表示しない（吹き出しで表示）
+    if (param.seriesName === 'ニュース') {
+      return '';
     }
 
     // 通常のローソク足の場合
