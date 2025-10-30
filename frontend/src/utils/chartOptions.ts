@@ -2,19 +2,62 @@ import { CandlestickData, NewsItem } from '../types/stock';
 import { sentimentConfig } from '../data/sentimentConfig';
 
 /**
- * ニュースデータをEChartsのmarkPoint形式に変換
+ * 株価データから各日付の最高値を取得するマップを作成
  */
-const createNewsMarkPoints = (newsData: NewsItem[]) => {
-  return newsData.map(news => ({
-    name: news.title,
-    coord: [news.date, 'max'] as [string, 'max'],  // X軸は日付、Y軸は'max'で上部に配置
-    value: news.title,
-    itemStyle: {
-      color: sentimentConfig[news.sentiment].color
-    },
-    // カスタムデータを保存（ツールチップで使用）
-    newsData: news
-  }));
+const createPriceMap = (stockData: CandlestickData[]) => {
+  const priceMap: { [date: string]: number } = {};
+  stockData.forEach(data => {
+    priceMap[data.date] = data.high;
+  });
+  return priceMap;
+};
+
+/**
+ * ニュースデータをEChartsのscatterシリーズ形式に変換
+ * 吹き出し表示用
+ */
+const createNewsScatterData = (newsData: NewsItem[], priceMap: { [date: string]: number }) => {
+  return newsData.map(news => {
+    // その日の最高値を取得（なければ0）
+    const price = priceMap[news.date] || 0;
+
+    return {
+      value: [news.date, price],
+      // カスタムデータを保存（ツールチップで使用）
+      newsData: news,
+      itemStyle: {
+        color: sentimentConfig[news.sentiment].color,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      label: {
+        show: true,
+        position: 'top',
+        distance: 10,
+        formatter: () => news.title.substring(0, 15) + (news.title.length > 15 ? '...' : ''),
+        backgroundColor: sentimentConfig[news.sentiment].color,
+        color: '#fff',
+        padding: [6, 10],
+        borderRadius: 6,
+        fontSize: 11,
+        fontWeight: 'bold',
+        shadowColor: 'rgba(0, 0, 0, 0.2)',
+        shadowBlur: 4,
+        shadowOffsetY: 2
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 12
+        },
+        itemStyle: {
+          borderWidth: 3,
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
+          shadowBlur: 8
+        }
+      }
+    };
+  });
 };
 
 /**
@@ -22,31 +65,34 @@ const createNewsMarkPoints = (newsData: NewsItem[]) => {
  */
 const createTooltipFormatter = () => {
   return (params: any) => {
-    // markPointの場合はニュース情報を表示
-    if (params.componentSubType === 'markPoint') {
-      const newsData: NewsItem = params.data.newsData;
+    // 配列の場合は最初の要素を取得
+    const param = Array.isArray(params) ? params[0] : params;
+
+    // ニュースのscatterシリーズの場合
+    if (param.seriesName === 'ニュース' && param.data?.newsData) {
+      const newsData: NewsItem = param.data.newsData;
       const sentimentLabel = sentimentConfig[newsData.sentiment].label;
 
       return `
-        <div style="padding: 10px; max-width: 300px;">
-          <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
+        <div style="padding: 12px; max-width: 350px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+          <div style="font-weight: bold; margin-bottom: 8px; font-size: 15px; color: #333;">
             ${newsData.title}
           </div>
-          <div style="color: #666; font-size: 12px; margin-bottom: 8px;">
-            ${newsData.date} ${newsData.time || ''}
+          <div style="color: #666; font-size: 12px; margin-bottom: 10px;">
+            📅 ${newsData.date} ${newsData.time || ''}
           </div>
           ${newsData.summary ? `
-            <div style="margin-bottom: 8px; line-height: 1.4;">
+            <div style="margin-bottom: 10px; line-height: 1.5; color: #555; font-size: 13px;">
               ${newsData.summary}
             </div>
           ` : ''}
-          <div style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between;">
-            <span style="display: inline-block; padding: 3px 10px; background: ${sentimentConfig[newsData.sentiment].color}; color: white; border-radius: 4px; font-size: 11px; font-weight: bold;">
+          <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: inline-block; padding: 4px 12px; background: ${sentimentConfig[newsData.sentiment].color}; color: white; border-radius: 5px; font-size: 11px; font-weight: bold;">
               ${sentimentLabel}
             </span>
             ${newsData.source ? `
               <span style="color: #999; font-size: 11px;">
-                ${newsData.source}
+                📰 ${newsData.source}
               </span>
             ` : ''}
           </div>
@@ -55,23 +101,20 @@ const createTooltipFormatter = () => {
     }
 
     // 通常のローソク足の場合
-    if (Array.isArray(params)) {
-      const param = params[0];
-      if (param && param.data) {
-        return `
-          <div style="padding: 8px;">
-            <div style="font-weight: bold; margin-bottom: 5px;">
-              ${param.axisValue}
-            </div>
-            <div style="font-size: 12px;">
-              始値: ${param.data[0]}<br/>
-              終値: ${param.data[1]}<br/>
-              安値: ${param.data[2]}<br/>
-              高値: ${param.data[3]}
-            </div>
+    if (param.seriesName === '株価' && Array.isArray(param.data)) {
+      return `
+        <div style="padding: 10px; background: #fff; border-radius: 6px;">
+          <div style="font-weight: bold; margin-bottom: 6px; color: #333;">
+            📊 ${param.axisValue}
           </div>
-        `;
-      }
+          <div style="font-size: 12px; color: #555; line-height: 1.6;">
+            始値: <strong>${param.data[0]}</strong><br/>
+            終値: <strong>${param.data[1]}</strong><br/>
+            安値: <strong>${param.data[2]}</strong><br/>
+            高値: <strong>${param.data[3]}</strong>
+          </div>
+        </div>
+      `;
     }
 
     return '';
@@ -80,6 +123,7 @@ const createTooltipFormatter = () => {
 
 /**
  * チャートオプション作成（ニュース統合版）
+ * 吹き出し形式でニュースを表示
  */
 export const createChartOptionWithNews = (
   stockData: CandlestickData[],
@@ -87,7 +131,12 @@ export const createChartOptionWithNews = (
 ) => {
   const dates = stockData.map(d => d.date);
   const values = stockData.map(d => [d.open, d.close, d.low, d.high]);
-  const newsMarkPoints = createNewsMarkPoints(newsData);
+
+  // 価格マップを作成
+  const priceMap = createPriceMap(stockData);
+
+  // ニュースデータをscatter形式に変換
+  const newsScatterData = createNewsScatterData(newsData, priceMap);
 
   return {
     title: {
@@ -100,21 +149,25 @@ export const createChartOptionWithNews = (
       }
     },
     tooltip: {
-      trigger: 'axis',
+      trigger: 'item',
       axisPointer: {
         type: 'cross'
       },
       formatter: createTooltipFormatter()
     },
     legend: {
-      data: ['株価'],
-      bottom: 10
+      data: ['株価', 'ニュース'],
+      bottom: 10,
+      selected: {
+        '株価': true,
+        'ニュース': true
+      }
     },
     grid: {
       left: '10%',
       right: '10%',
       bottom: '15%',
-      top: '15%'
+      top: '20%'  // 上部の吹き出しが表示されるよう余裕を持たせる
     },
     xAxis: {
       type: 'category',
@@ -168,20 +221,16 @@ export const createChartOptionWithNews = (
           borderColor: '#26A69A',
           borderColor0: '#EF5350'
         },
-        // ニュースマーカーを追加
-        markPoint: {
-          symbol: 'pin',         // マーカーのシンボル（ピン型）
-          symbolSize: 50,        // マーカーサイズ
-          data: newsMarkPoints,
-          label: {
-            show: false          // マーカー上のラベルは非表示
-          },
-          emphasis: {
-            label: {
-              show: false
-            }
-          }
-        }
+        z: 1  // ローソク足を下のレイヤーに
+      },
+      {
+        name: 'ニュース',
+        type: 'scatter',
+        data: newsScatterData,
+        symbolSize: 12,  // 吹き出しの基点となる円のサイズ
+        z: 2,  // ニュースを上のレイヤーに
+        animation: true,
+        animationDelay: (idx: number) => idx * 50  // 順番にアニメーション
       }
     ]
   };
