@@ -311,12 +311,12 @@ mkdir -p backend/src
 ### Step 2: バックエンドファイル作成
 
 以下のファイルを作成：
-- [ ] `backend/package.json`
-- [ ] `backend/tsconfig.json`
-- [ ] `backend/src/index.ts`
-- [ ] `backend/Dockerfile`
-- [ ] `backend/.dockerignore`
-- [ ] `backend/.env.example`
+- [x] `backend/package.json`
+- [x] `backend/tsconfig.json`
+- [x] `backend/src/index.ts`
+- [x] `backend/Dockerfile`
+- [x] `backend/.dockerignore`
+- [x] `backend/.env.example`
 
 ### Step 3: compose.yml を更新
 
@@ -548,9 +548,9 @@ docker compose build --no-cache backend
 
 環境構築完了の確認項目：
 
-- [ ] `backend/` ディレクトリが作成されている
-- [ ] `backend/package.json` が作成されている
-- [ ] `backend/Dockerfile` が作成されている
+- [x] `backend/` ディレクトリが作成されている
+- [x] `backend/package.json` が作成されている
+- [x] `backend/Dockerfile` が作成されている
 - [ ] `compose.yml` にbackendとdbサービスが追加されている
 - [ ] `docker compose up --watch` でコンテナが起動する
 - [ ] バックエンドログに「✅ Database connected successfully!」が表示される
