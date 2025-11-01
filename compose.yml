@@ -11,6 +11,7 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
     stdin_open: true
     tty: true
     develop:
@@ -20,3 +21,53 @@ services:
           target: /app/src
         - action: rebuild
           path: ./frontend/package.json
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chart-news-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://chartuser:chartpass@db:5432/chartdb
+      - PORT=3000
+    stdin_open: true
+    tty: true
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+        - action: rebuild
+          path: ./backend/package.json
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    container_name: chart-news-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=chartdb
+      - POSTGRES_USER=chartuser
+      - POSTGRES_PASSWORD=chartpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U chartuser -d chartdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
