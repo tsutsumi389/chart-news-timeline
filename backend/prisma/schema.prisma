@@ -1,0 +1,83 @@
+// Prisma Schema for Chart News Timeline
+// データベース: PostgreSQL 16
+// 文字コード: UTF-8
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 株マスタテーブル
+// 日本株の基本情報を管理
+model Stock {
+  stockId    Int      @id @default(autoincrement()) @map("stock_id")
+  stockCode  String   @unique @map("stock_code") @db.VarChar(4)
+  stockName  String   @map("stock_name") @db.VarChar(100)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  // リレーション
+  prices StockPrice[]
+  news   News[]
+
+  @@map("stocks")
+}
+
+// 株価テーブル
+// 日足のOHLCデータを格納
+model StockPrice {
+  priceId    BigInt   @id @default(autoincrement()) @map("price_id")
+  stockId    Int      @map("stock_id")
+  tradeDate  DateTime @map("trade_date") @db.Date
+  openPrice  Decimal  @map("open_price") @db.Decimal(10, 2)
+  highPrice  Decimal  @map("high_price") @db.Decimal(10, 2)
+  lowPrice   Decimal  @map("low_price") @db.Decimal(10, 2)
+  closePrice Decimal  @map("close_price") @db.Decimal(10, 2)
+  volume     BigInt   @map("volume")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamp()
+
+  // リレーション
+  stock Stock @relation(fields: [stockId], references: [stockId], onDelete: Cascade)
+
+  // インデックス
+  @@unique([stockId, tradeDate], map: "idx_stock_date")
+  @@index([tradeDate], map: "idx_trade_date")
+  @@map("stock_prices")
+}
+
+// ニューステーブル
+// 株価に影響を与える可能性のあるニュース情報を管理
+model News {
+  newsId         BigInt        @id @default(autoincrement()) @map("news_id")
+  stockId        Int           @map("stock_id")
+  publishedAt    DateTime      @map("published_at") @db.Timestamp()
+  title          String        @db.VarChar(255)
+  summary        String?       @db.Text
+  url            String?       @db.VarChar(500)
+  source         String?       @db.VarChar(100)
+  sentiment      Sentiment?    @default(neutral)
+  sentimentScore Decimal?      @map("sentiment_score") @db.Decimal(3, 2)
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamp()
+
+  // リレーション
+  stock Stock @relation(fields: [stockId], references: [stockId], onDelete: Cascade)
+
+  // インデックス
+  @@index([stockId, publishedAt], map: "idx_stock_published")
+  @@index([publishedAt], map: "idx_published_at")
+  @@index([sentiment], map: "idx_sentiment")
+  @@map("news")
+}
+
+// センチメント分析結果のENUM型
+enum Sentiment {
+  positive // ポジティブ（緑色でマーカー表示）
+  negative // ネガティブ（赤色でマーカー表示）
+  neutral  // ニュートラル（灰色でマーカー表示）
+}
