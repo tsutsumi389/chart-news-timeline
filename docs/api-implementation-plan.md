@@ -326,11 +326,11 @@ main()
 
 ### Phase 2: 基盤実装
 
-- [ ] Fastifyサーバー設定 (`src/server.ts`)
-- [ ] データベース設定 (`src/config/database.ts`)
-- [ ] エラーハンドリング (`src/utils/errorHandler.ts`)
-- [ ] ロガー設定 (`src/utils/logger.ts`)
-- [ ] レスポンス型定義 (`src/types/`)
+- [x] Fastifyサーバー設定 (`src/server.ts`)
+- [x] データベース設定 (`src/config/database.ts`)
+- [x] エラーハンドリング (`src/utils/errorHandler.ts`)
+- [x] ロガー設定 (`src/utils/logger.ts`)
+- [x] レスポンス型定義 (`src/types/`)
 
 ### Phase 3: リポジトリ実装
 
