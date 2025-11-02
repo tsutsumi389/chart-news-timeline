@@ -18,10 +18,6 @@ Chart News Timelineアプリケーションで使用する3つのテーブル定
 | stock_id | INT | NOT NULL | PK | AUTO_INCREMENT | 株ID（主キー） |
 | stock_code | VARCHAR(4) | NOT NULL | UNIQUE | - | 証券コード（4桁、例: 7203） |
 | stock_name | VARCHAR(100) | NOT NULL | - | - | 銘柄名（例: トヨタ自動車） |
-| market | VARCHAR(20) | NOT NULL | - | - | 市場区分（東証プライム、東証スタンダード等） |
-| sector | VARCHAR(50) | NULL | - | - | 業種（例: 輸送用機器） |
-| listing_date | DATE | NULL | - | - | 上場日 |
-| is_active | BOOLEAN | NOT NULL | - | TRUE | 有効フラグ（上場廃止等で FALSE） |
 | created_at | TIMESTAMP | NOT NULL | - | CURRENT_TIMESTAMP | 作成日時 |
 | updated_at | TIMESTAMP | NOT NULL | - | CURRENT_TIMESTAMP ON UPDATE | 更新日時 |
 
@@ -30,15 +26,11 @@ Chart News Timelineアプリケーションで使用する3つのテーブル定
 ```sql
 PRIMARY KEY (stock_id)
 UNIQUE INDEX idx_stock_code (stock_code)
-INDEX idx_market (market)
-INDEX idx_is_active (is_active)
 ```
 
 ### 備考
 
 - `stock_code`: 日本株の証券コードは4桁の数字（例: 7203=トヨタ自動車）
-- `market`: 「東証プライム」「東証スタンダード」「東証グロース」等
-- `is_active`: 上場廃止や統合された銘柄は FALSE にする
 
 ---
 
@@ -137,10 +129,10 @@ stocks (1) ----< (N) stock_prices
 ### stocks テーブル
 
 ```sql
-INSERT INTO stocks (stock_code, stock_name, market, sector, listing_date, is_active) VALUES
-('7203', 'トヨタ自動車', '東証プライム', '輸送用機器', '1949-05-16', TRUE),
-('9984', 'ソフトバンクグループ', '東証プライム', '情報・通信業', '1994-07-22', TRUE),
-('6758', 'ソニーグループ', '東証プライム', '電気機器', '1958-12-01', TRUE);
+INSERT INTO stocks (stock_code, stock_name) VALUES
+('7203', 'トヨタ自動車'),
+('9984', 'ソフトバンクグループ'),
+('6758', 'ソニーグループ');
 ```
 
 ### stock_prices テーブル
