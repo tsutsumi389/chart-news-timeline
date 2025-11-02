@@ -47,12 +47,17 @@
 ### バックエンド
 - **ランタイム**: Node.js 24 (Alpine)
 - **言語**: TypeScript
+- **フレームワーク**: Fastify
+- **ORM**: Prisma Client
+- **バリデーション**: Zod
+- **テスト**: Vitest
 - **開発環境**: Docker + Docker Compose
-- **データベースクライアント**: node-postgres (pg)
 
 ### データベース
 - **RDBMS**: PostgreSQL 16 (Alpine)
+- **スキーマ管理**: Prisma
 - **データ永続化**: Docker Volume
+- **モデル**: Stock (株マスタ), StockPrice (株価OHLC), News (ニュース)
 
 ## 開発環境
 
@@ -123,6 +128,17 @@ docker compose exec backend sh
 
 # データベースに接続
 docker compose exec db psql -U chartuser -d chartdb
+
+# Prismaコマンド（バックエンドコンテナ内で実行）
+docker compose exec backend npx prisma migrate dev    # マイグレーション作成・適用
+docker compose exec backend npx prisma studio         # Prisma Studio起動
+docker compose exec backend npx prisma generate       # Prismaクライアント生成
+docker compose exec backend npm run db:seed           # サンプルデータ投入
+
+# テスト実行（バックエンドコンテナ内で実行）
+docker compose exec backend npm test                  # テスト実行
+docker compose exec backend npm run test:watch        # テストウォッチモード
+docker compose exec backend npm run test:coverage     # カバレッジレポート生成
 ```
 
 ## プロジェクト構造
@@ -131,18 +147,40 @@ docker compose exec db psql -U chartuser -d chartdb
 chart-news-timeline/
 ├── frontend/                       # フロントエンド (React + Vite)
 │   ├── src/
+│   │   ├── components/            # Reactコンポーネント
+│   │   │   └── StockChart.tsx     # チャートコンポーネント
+│   │   ├── types/                 # TypeScript型定義
+│   │   │   └── stock.ts
+│   │   ├── utils/                 # ユーティリティ
+│   │   │   └── chartOptions.ts    # ECharts設定
+│   │   └── data/                  # サンプルデータ
 │   ├── Dockerfile
 │   └── package.json
-├── backend/                        # バックエンド (Node.js + TypeScript)
+├── backend/                        # バックエンド (Fastify + Prisma)
 │   ├── src/
-│   │   └── index.ts
+│   │   ├── config/                # 設定ファイル
+│   │   │   └── database.ts        # Prismaクライアント設定
+│   │   ├── types/                 # TypeScript型定義
+│   │   │   ├── api.ts
+│   │   │   └── responses.ts
+│   │   ├── utils/                 # ユーティリティ
+│   │   │   ├── errorHandler.ts
+│   │   │   └── logger.ts
+│   │   ├── index.ts               # エントリーポイント
+│   │   └── server.ts              # Fastifyサーバー設定
+│   ├── prisma/
+│   │   ├── schema.prisma          # Prismaスキーマ定義
+│   │   └── seed.ts                # シードデータ
 │   ├── Dockerfile
 │   ├── package.json
 │   └── tsconfig.json
 ├── compose.yml                     # Docker Compose設定
 ├── docs/                           # ドキュメント
 │   ├── frontend-implementation-plan.md
-│   └── backend-docker-setup-plan.md
+│   ├── backend-docker-setup-plan.md
+│   ├── database-schema.md
+│   └── api-implementation-plan.md
+├── CLAUDE.md                       # Claude Code用ガイド
 └── README.md
 ```
 
@@ -152,9 +190,14 @@ chart-news-timeline/
 - ✅ バックエンド環境構築完了
 - ✅ データベース環境構築完了
 - ✅ Docker Compose統合完了
-- ⬜ Prisma ORM セットアップ（予定）
+- ✅ Prisma ORM セットアップ完了
+- ✅ データベーススキーマ定義完了
+- ✅ バックエンド基盤実装完了（Fastifyサーバー、エラーハンドリング、ロガー）
+- ✅ ユニットテスト環境構築完了（Vitest）
+- ✅ フロントエンドチャート表示機能完了（サンプルデータ）
 - ⬜ APIエンドポイント実装（予定）
 - ⬜ フロントエンド・バックエンド統合（予定）
+- ⬜ データインポート機能実装（予定）
 
 ## ライセンス
 
