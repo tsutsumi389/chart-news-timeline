@@ -4,7 +4,14 @@ frontend/node_modules/
 
 # Build outputs
 frontend/dist/
+backend/dist/
 dist/
+
+# Test coverage
+coverage/
+.coverage/
+backend/coverage/
+frontend/coverage/
 
 # Logs
 *.log
