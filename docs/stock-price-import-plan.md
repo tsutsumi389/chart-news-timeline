@@ -918,12 +918,12 @@ enum ImportStatus {
 
 ### Phase 4: フロントエンドコンポーネント実装（3-4日）
 
-- [ ] StockSelector コンポーネント実装
-- [ ] CsvUploader コンポーネント実装
-- [ ] FileDropZone コンポーネント実装
-- [ ] ImportProgress コンポーネント実装
-- [ ] ImportResult コンポーネント実装
-- [ ] StockPriceImport メイン画面実装
+- [x] StockSelector コンポーネント実装
+- [x] CsvUploader コンポーネント実装
+- [x] FileDropZone コンポーネント実装
+- [x] ImportProgress コンポーネント実装
+- [x] ImportResult コンポーネント実装
+- [x] StockPriceImport メイン画面実装
 
 ### Phase 5: インポート履歴機能（2日）
 
