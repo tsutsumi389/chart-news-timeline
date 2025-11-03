@@ -1,4 +1,15 @@
 /**
+ * 銘柄情報の型定義
+ */
+export interface Stock {
+  stockId: number;
+  stockCode: string;
+  stockName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
  * ローソク足データの型定義
  */
 export interface CandlestickData {

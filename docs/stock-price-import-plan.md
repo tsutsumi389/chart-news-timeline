@@ -910,11 +910,11 @@ enum ImportStatus {
 
 ### Phase 3: フロントエンド基盤（2-3日）
 
-- [ ] 型定義作成（types/import.ts）
-- [ ] インポートサービス実装（services/importService.ts）
-- [ ] CSVパーサー実装（utils/csvParser.ts）
-- [ ] CSVバリデーター実装（utils/csvValidator.ts）
-- [ ] カスタムフック実装（hooks/useStockImport.ts）
+- [x] 型定義作成（types/import.ts）
+- [x] インポートサービス実装（services/importService.ts）
+- [x] CSVパーサー実装（utils/csvParser.ts）
+- [x] CSVバリデーター実装（utils/csvValidator.ts）
+- [x] カスタムフック実装（hooks/useStockImport.ts）
 
 ### Phase 4: フロントエンドコンポーネント実装（3-4日）
 
