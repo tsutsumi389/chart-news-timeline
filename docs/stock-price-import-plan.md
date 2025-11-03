@@ -894,10 +894,10 @@ enum ImportStatus {
 
 ### Phase 1: バックエンド基盤（2-3日）
 
-- [ ] CSVパーサーサービス実装
-- [ ] CSVバリデーター実装
-- [ ] 株価リポジトリ拡張（upsert, existsByDate, deleteByDateRange）
-- [ ] 単体テスト作成
+- [x] CSVパーサーサービス実装
+- [x] CSVバリデーター実装
+- [x] 株価リポジトリ拡張（upsert, existsByDate, deleteByDateRange）
+- [x] 単体テスト作成
 
 ### Phase 2: バックエンドAPI実装（2-3日）
 
