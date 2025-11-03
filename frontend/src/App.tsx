@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import StockChart from './components/StockChart'
-import StockPriceImport from './pages/StockPriceImport'
+import { StockPriceImport } from './pages/StockPriceImport'
 import { sampleStockData } from './data/sampleData'
 import { sampleNewsData } from './data/sampleNewsData'
 
