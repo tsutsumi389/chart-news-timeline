@@ -4,9 +4,11 @@
 
 import Fastify, { FastifyInstance } from 'fastify';
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 import { loggerConfig } from './utils/logger';
 import { globalErrorHandler } from './utils/errorHandler';
 import { testDatabaseConnection, disconnectDatabase } from './config/database';
+import { stockImportRoutes } from './routes/stockImport';
 
 /**
  * Fastifyサーバーインスタンスを作成
@@ -21,6 +23,13 @@ export async function createServer(): Promise<FastifyInstance> {
   await server.register(cors, {
     origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
     credentials: true,
+  });
+
+  // Multipartプラグイン登録（ファイルアップロード用）
+  await server.register(multipart, {
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB
+    },
   });
 
   // グローバルエラーハンドラー登録
@@ -41,8 +50,8 @@ export async function createServer(): Promise<FastifyInstance> {
     };
   });
 
-  // ルート登録（後で追加）
-  // await server.register(routes, { prefix: '/api/v1' });
+  // APIルート登録
+  await server.register(stockImportRoutes, { prefix: '/api/v1' });
 
   // Graceful shutdown
   const closeGracefully = async (signal: string) => {
