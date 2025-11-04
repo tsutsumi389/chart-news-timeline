@@ -16,8 +16,8 @@ Chart News Timelineアプリケーションで使用する3つのテーブル定
 | カラム名 | データ型 | NULL | キー | デフォルト | 説明 |
 |---------|---------|------|------|-----------|------|
 | stock_id | INT | NOT NULL | PK | AUTO_INCREMENT | 株ID（主キー） |
-| stock_code | VARCHAR(4) | NOT NULL | UNIQUE | - | 証券コード（4桁、例: 7203） |
-| stock_name | VARCHAR(100) | NOT NULL | - | - | 銘柄名（例: トヨタ自動車） |
+| stock_code | VARCHAR(100) | NOT NULL | UNIQUE | - | 証券コード（英数字4桁、例: 7203、AAPL） |
+| stock_name | VARCHAR(100) | NOT NULL | - | - | 銘柄名（例: トヨタ自動車、Apple Inc.） |
 | created_at | TIMESTAMP | NOT NULL | - | CURRENT_TIMESTAMP | 作成日時 |
 | updated_at | TIMESTAMP | NOT NULL | - | CURRENT_TIMESTAMP ON UPDATE | 更新日時 |
 
@@ -30,7 +30,9 @@ UNIQUE INDEX idx_stock_code (stock_code)
 
 ### 備考
 
-- `stock_code`: 日本株の証券コードは4桁の数字（例: 7203=トヨタ自動車）
+- `stock_code`: 証券コード（英数字4桁、大文字統一）
+  - 日本株: 4桁の数字（例: 7203=トヨタ自動車）
+  - 米国株: 英字ティッカー（例: AAPL=Apple Inc.、GOOGL=Alphabet Inc.）
 
 ---
 
