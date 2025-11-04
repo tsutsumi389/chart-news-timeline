@@ -51,3 +51,25 @@ export interface SentimentConfig {
     label: string;
   };
 }
+
+/**
+ * 株登録入力型
+ */
+export interface CreateStockInput {
+  stockCode: string;
+  stockName: string;
+}
+
+/**
+ * API共通レスポンス型
+ */
+export interface ApiResponse<T> {
+  success: boolean;
+  data?: T;
+  error?: {
+    code: string;
+    message: string;
+    details?: any;
+  };
+  message?: string;
+}

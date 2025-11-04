@@ -2,6 +2,8 @@ import './App.css'
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import StockChart from './components/StockChart'
 import { StockPriceImport } from './pages/StockPriceImport'
+import { StocksPage } from './pages/StocksPage'
+import { StockNewPage } from './pages/StockNewPage'
 import { sampleStockData } from './data/sampleData'
 import { sampleNewsData } from './data/sampleNewsData'
 
@@ -24,6 +26,15 @@ function App() {
 
             {/* ナビゲーション */}
             <nav className="App-nav">
+              <NavLink
+                to="/stocks"
+                className={({ isActive }) =>
+                  isActive ? "App-nav-link active" : "App-nav-link"
+                }
+              >
+                <span className="App-nav-link-icon">📋</span>
+                株一覧
+              </NavLink>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -49,6 +60,8 @@ function App() {
         {/* メインコンテンツ */}
         <main className="App-main">
           <Routes>
+            <Route path="/stocks" element={<StocksPage />} />
+            <Route path="/stocks/new" element={<StockNewPage />} />
             <Route path="/" element={
               <>
                 <div className="App-page-header">

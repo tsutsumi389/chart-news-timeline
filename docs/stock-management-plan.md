@@ -1319,14 +1319,14 @@ export default App;
 
 ### Phase 2: フロントエンド実装
 
-- [ ] 型定義更新 (`types/stock.ts`)
-- [ ] API通信実装 (`services/stockApi.ts`)
-- [ ] 株一覧コンポーネント実装 (`components/StockList.tsx`)
-- [ ] 株登録フォームコンポーネント実装 (`components/StockForm.tsx`)
-- [ ] 株一覧ページ実装 (`pages/StocksPage.tsx`)
-- [ ] 株登録ページ実装 (`pages/StockNewPage.tsx`)
-- [ ] ルーティング設定 (`App.tsx`)
-- [ ] CSSスタイリング
+- [x] 型定義更新 (`types/stock.ts`)
+- [x] API通信実装 (`services/stockApi.ts`)
+- [x] 株一覧コンポーネント実装 (`components/StockList.tsx`)
+- [x] 株登録フォームコンポーネント実装 (`components/StockForm.tsx`)
+- [x] 株一覧ページ実装 (`pages/StocksPage.tsx`)
+- [x] 株登録ページ実装 (`pages/StockNewPage.tsx`)
+- [x] ルーティング設定 (`App.tsx`)
+- [x] CSSスタイリング
 
 ### Phase 3: 統合テスト
 
