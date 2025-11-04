@@ -1,0 +1,36 @@
+/**
+ * 株登録ページのスタイル
+ */
+
+.stock-new-page {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stock-new-page h1 {
+  font-size: 28px;
+  color: #333;
+  margin: 0 0 24px 0;
+  text-align: center;
+}
+
+.error-banner {
+  padding: 16px;
+  background-color: #FFEBEE;
+  color: #C62828;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #EF5350;
+}
+
+.success-banner {
+  padding: 16px;
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #26A69A;
+}

@@ -39,13 +39,13 @@ export class StockRepository {
   }
 
   /**
-   * 全銘柄を取得
+   * 全銘柄を取得（登録日時の降順）
    * @returns 株マスタ配列
    */
   async findAll(): Promise<Stock[]> {
     return await this.prisma.stock.findMany({
       orderBy: {
-        stockCode: 'asc',
+        createdAt: 'desc',
       },
     });
   }
