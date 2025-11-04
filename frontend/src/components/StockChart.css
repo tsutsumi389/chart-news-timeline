@@ -1,0 +1,53 @@
+/* 株価チャートコンテナ */
+.stock-chart {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.stock-chart:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* チャートローディング状態 */
+.stock-chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--border-radius-lg);
+}
+
+.stock-chart-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-light);
+  border-top-color: var(--color-primary-600);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* チャートエラー状態 */
+.stock-chart-error {
+  padding: var(--spacing-xl);
+  background-color: var(--color-error-light);
+  color: var(--color-error-dark);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .stock-chart {
+    border-radius: var(--border-radius-md);
+  }
+}

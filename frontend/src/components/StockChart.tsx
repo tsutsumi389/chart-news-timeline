@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import { CandlestickData, NewsItem } from '../types/stock';
 import { createChartOptionWithNews } from '../utils/chartOptions';
+import './StockChart.css';
 
 interface StockChartProps {
   stockData: CandlestickData[];
@@ -49,6 +50,7 @@ const StockChart: React.FC<StockChartProps> = ({
   return (
     <div
       ref={chartRef}
+      className="stock-chart"
       style={{
         width: '100%',
         height: height,

@@ -1,0 +1,273 @@
+/* 株価インポートページ */
+.stock-import-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.stock-import-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* カード */
+.stock-import-card {
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  transition: box-shadow var(--transition-base);
+}
+
+.stock-import-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.stock-import-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.stock-import-card-icon {
+  font-size: 1.5rem;
+  color: var(--color-primary-600);
+}
+
+.stock-import-card-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* 設定セクション */
+.stock-import-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.stock-import-setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.stock-import-setting-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.stock-import-select {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.stock-import-select:hover {
+  border-color: var(--color-primary-400);
+}
+
+.stock-import-select:focus {
+  outline: none;
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* ボタンコンテナ */
+.stock-import-button-container {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* ボタンスタイル */
+.stock-import-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.stock-import-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stock-import-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.stock-import-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stock-import-button-primary {
+  background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-700) 100%);
+  color: var(--text-inverse);
+}
+
+.stock-import-button-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-800) 100%);
+}
+
+.stock-import-button-success {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-dark) 100%);
+  color: var(--text-inverse);
+}
+
+.stock-import-button-success:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-success-dark) 0%, #2e7d32 100%);
+}
+
+.stock-import-button-error {
+  background: linear-gradient(135deg, var(--color-error) 0%, var(--color-error-dark) 100%);
+  color: var(--text-inverse);
+}
+
+.stock-import-button-error:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-error-dark) 0%, #c62828 100%);
+}
+
+.stock-import-button-icon {
+  font-size: 1.2em;
+}
+
+/* エラー表示 */
+.stock-import-error {
+  background-color: #ffebee;
+  border: 2px solid var(--color-error);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.stock-import-error-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.stock-import-error-icon {
+  font-size: 2rem;
+}
+
+.stock-import-error-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-error-dark);
+  margin: 0;
+}
+
+.stock-import-error-message {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error-light);
+  margin-bottom: var(--spacing-md);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-family-mono);
+}
+
+/* 使い方ガイド */
+.stock-import-guide {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid var(--color-primary-200);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.stock-import-guide-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.stock-import-guide-icon {
+  font-size: 2rem;
+}
+
+.stock-import-guide-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-900);
+  margin: 0;
+}
+
+.stock-import-guide-list {
+  margin: 0;
+  padding-left: var(--spacing-xl);
+  color: var(--color-primary-900);
+}
+
+.stock-import-guide-list-item {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.stock-import-guide-list-item strong {
+  color: var(--color-primary-800);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .stock-import-card {
+    padding: var(--spacing-lg);
+  }
+
+  .stock-import-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stock-import-button-container {
+    flex-direction: column;
+  }
+
+  .stock-import-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stock-import-card {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+  }
+
+  .stock-import-card-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .stock-import-guide {
+    padding: var(--spacing-md);
+  }
+}
