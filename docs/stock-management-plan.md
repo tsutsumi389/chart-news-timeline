@@ -1309,13 +1309,13 @@ export default App;
 
 ### Phase 1: バックエンドAPI実装
 
-- [ ] Zodスキーマ定義 (`schemas/stockSchemas.ts`)
-- [ ] リポジトリ拡張 (`repositories/stockRepository.ts`)
-- [ ] サービス実装 (`services/stockService.ts`)
-- [ ] コントローラー実装 (`controllers/stockController.ts`)
-- [ ] ルート定義 (`routes/stocks.ts`)
-- [ ] ルート統合 (`routes/index.ts`)
-- [ ] APIエンドポイントの動作確認（curl / Postman）
+- [x] Zodスキーマ定義 (`schemas/stockSchemas.ts`)
+- [x] リポジトリ拡張 (`repositories/stockRepository.ts`)
+- [x] サービス実装 (`services/stockService.ts`)
+- [x] コントローラー実装 (`controllers/stockController.ts`)
+- [x] ルート定義 (`routes/stocks.ts`)
+- [x] ルート統合 (`routes/index.ts`)
+- [x] APIエンドポイントの動作確認（curl / Postman）
 
 ### Phase 2: フロントエンド実装
 
