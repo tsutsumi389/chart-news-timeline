@@ -61,6 +61,22 @@ export interface CreateStockInput {
 }
 
 /**
+ * 株価データの型定義（DBから取得）
+ */
+export interface StockPrice {
+  priceId: string;
+  stockId: number;
+  tradeDate: string;
+  openPrice: string;
+  highPrice: string;
+  lowPrice: string;
+  closePrice: string;
+  volume: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
  * API共通レスポンス型
  */
 export interface ApiResponse<T> {

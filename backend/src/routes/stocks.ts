@@ -1,10 +1,11 @@
 /**
  * 株マスタルート
- * 株一覧・登録・詳細取得のエンドポイント定義
+ * 株一覧・登録・詳細取得・株価データ取得のエンドポイント定義
  */
 
 import { FastifyInstance } from 'fastify';
 import * as stockController from '../controllers/stockController';
+import * as stockPriceController from '../controllers/stockPriceController';
 
 /**
  * 株マスタルートを登録
@@ -19,4 +20,7 @@ export async function stockRoutes(fastify: FastifyInstance): Promise<void> {
 
   // 株詳細取得（IDベース）
   fastify.get('/stocks/id/:stockId', stockController.getStockById);
+
+  // 株価データ取得（銘柄コードベース）
+  fastify.get('/stocks/:stockCode/prices', stockPriceController.getStockPrices);
 }
