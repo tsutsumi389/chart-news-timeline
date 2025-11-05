@@ -4,6 +4,7 @@ import StockChart from './components/StockChart'
 import { StockPriceImport } from './pages/StockPriceImport'
 import { StocksPage } from './pages/StocksPage'
 import { StockNewPage } from './pages/StockNewPage'
+import { StockChartPage } from './pages/StockChartPage'
 import { sampleStockData } from './data/sampleData'
 import { sampleNewsData } from './data/sampleNewsData'
 
@@ -62,6 +63,7 @@ function App() {
           <Routes>
             <Route path="/stocks" element={<StocksPage />} />
             <Route path="/stocks/new" element={<StockNewPage />} />
+            <Route path="/chart/:stockCode" element={<StockChartPage />} />
             <Route path="/" element={
               <>
                 <div className="App-page-header">

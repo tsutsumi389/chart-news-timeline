@@ -194,6 +194,41 @@ export class StockPriceRepository {
       },
     });
   }
+
+  /**
+   * 銘柄コードから株価データを取得
+   * @param stockCode 銘柄コード（4桁）
+   * @param startDate 開始日（省略可）
+   * @param endDate 終了日（省略可）
+   * @param limit 取得件数制限（省略可）
+   * @returns 株価データ配列
+   */
+  async findByStockCode(
+    stockCode: string,
+    startDate?: Date,
+    endDate?: Date,
+    limit?: number
+  ): Promise<StockPrice[]> {
+    const where: Prisma.StockPriceWhereInput = {
+      stock: {
+        stockCode,
+      },
+    };
+
+    if (startDate || endDate) {
+      where.tradeDate = {};
+      if (startDate) where.tradeDate.gte = startDate;
+      if (endDate) where.tradeDate.lte = endDate;
+    }
+
+    return await this.prisma.stockPrice.findMany({
+      where,
+      orderBy: {
+        tradeDate: 'asc',
+      },
+      take: limit,
+    });
+  }
 }
 
 // シングルトンインスタンスをエクスポート
