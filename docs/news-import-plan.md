@@ -1178,10 +1178,10 @@ model NewsImportHistory {
 
 ### Phase 1: バックエンド基盤（2-3日）
 
-- [ ] CSVパーサーサービス実装
-- [ ] ニュースバリデーター実装
-- [ ] ニュースリポジトリ実装（upsert, existsByTitleAndDate, deleteByDateRange）
-- [ ] 単体テスト作成
+- [x] CSVパーサーサービス実装
+- [x] ニュースバリデーター実装
+- [x] ニュースリポジトリ実装（upsert, existsByTitleAndDate, deleteByDateRange）
+- [x] 単体テスト作成
 
 ### Phase 2: バックエンドAPI実装（2-3日）
 
