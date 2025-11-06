@@ -1201,13 +1201,13 @@ model NewsImportHistory {
 
 ### Phase 4: フロントエンドコンポーネント実装（3-4日）
 
-- [ ] StockSelector コンポーネント実装（株価インポートと共通化）
-- [ ] CsvUploader コンポーネント実装
-- [ ] NewsPreview コンポーネント実装
-- [ ] SentimentBadge コンポーネント実装
-- [ ] ImportProgress コンポーネント実装（株価インポートと共通化）
-- [ ] ImportResult コンポーネント実装（株価インポートと共通化）
-- [ ] NewsImport メイン画面実装
+- [x] StockSelector コンポーネント実装（株価インポートと共通化）
+- [x] CsvUploader コンポーネント実装
+- [x] NewsPreview コンポーネント実装
+- [x] SentimentBadge コンポーネント実装
+- [x] ImportProgress コンポーネント実装（株価インポートと共通化）
+- [x] ImportResult コンポーネント実装（株価インポートと共通化）
+- [x] NewsImport メイン画面実装
 
 ### Phase 5: インポート履歴機能（2日）
 
