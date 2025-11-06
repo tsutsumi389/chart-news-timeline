@@ -1,0 +1,389 @@
+/* ニュースインポートページ */
+.news-import-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+/* ヘッダー */
+.news-import-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.news-import-main-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.news-import-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* メインコンテンツ */
+.news-import-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.news-import-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+/* カード */
+.news-import-card {
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-xl);
+  transition: box-shadow var(--transition-base);
+}
+
+.news-import-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.news-import-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.news-import-card-icon {
+  font-size: 1.5rem;
+  color: var(--color-primary-600);
+}
+
+.news-import-card-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* 設定セクション */
+.news-import-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.news-import-setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.news-import-setting-label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.news-import-setting-help {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin: var(--spacing-xs) 0 0 0;
+  font-style: italic;
+}
+
+.news-import-select {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.news-import-select:hover {
+  border-color: var(--color-primary-400);
+}
+
+.news-import-select:focus {
+  outline: none;
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.news-import-input {
+  padding: var(--spacing-md);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+}
+
+.news-import-input:hover {
+  border-color: var(--color-primary-400);
+}
+
+.news-import-input:focus {
+  outline: none;
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* 日付範囲フィルター */
+.news-import-date-range {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.news-import-date-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 200px;
+}
+
+.news-import-date-input label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.news-import-date-separator {
+  font-size: var(--font-size-lg);
+  color: var(--text-muted);
+}
+
+/* ボタンコンテナ */
+.news-import-button-container {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* ボタンスタイル */
+.news-import-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.news-import-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.news-import-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.news-import-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.news-import-button-primary {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-600) 0%,
+    var(--color-primary-700) 100%
+  );
+  color: var(--text-inverse);
+}
+
+.news-import-button-primary:hover:not(:disabled) {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-700) 0%,
+    var(--color-primary-800) 100%
+  );
+}
+
+.news-import-button-success {
+  background: linear-gradient(
+    135deg,
+    var(--color-success) 0%,
+    var(--color-success-dark) 100%
+  );
+  color: var(--text-inverse);
+}
+
+.news-import-button-success:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-success-dark) 0%, #2e7d32 100%);
+}
+
+.news-import-button-error {
+  background: linear-gradient(
+    135deg,
+    var(--color-error) 0%,
+    var(--color-error-dark) 100%
+  );
+  color: var(--text-inverse);
+}
+
+.news-import-button-error:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-error-dark) 0%, #c62828 100%);
+}
+
+.news-import-button-icon {
+  font-size: 1.2em;
+}
+
+/* エラー表示 */
+.news-import-error {
+  background-color: #ffebee;
+  border: 2px solid var(--color-error);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.news-import-error-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.news-import-error-icon {
+  font-size: 2rem;
+}
+
+.news-import-error-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-error-dark);
+  margin: 0;
+}
+
+.news-import-error-message {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error-light);
+  margin-bottom: var(--spacing-md);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: var(--font-family-mono);
+}
+
+/* 使い方ガイド */
+.news-import-guide {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid var(--color-primary-200);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.news-import-guide-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.news-import-guide-icon {
+  font-size: 2rem;
+}
+
+.news-import-guide-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-900);
+  margin: 0;
+}
+
+.news-import-guide-list {
+  margin: 0;
+  padding-left: var(--spacing-xl);
+  color: var(--color-primary-900);
+}
+
+.news-import-guide-list-item {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+}
+
+.news-import-guide-list-item strong {
+  color: var(--color-primary-800);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  .news-import-container {
+    padding: var(--spacing-md);
+  }
+
+  .news-import-card {
+    padding: var(--spacing-lg);
+  }
+
+  .news-import-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .news-import-date-range {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .news-import-date-separator {
+    display: none;
+  }
+
+  .news-import-button-container {
+    flex-direction: column;
+  }
+
+  .news-import-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-import-card {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+  }
+
+  .news-import-card-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .news-import-guide {
+    padding: var(--spacing-md);
+  }
+
+  .news-import-main-title {
+    font-size: var(--font-size-xl);
+  }
+}

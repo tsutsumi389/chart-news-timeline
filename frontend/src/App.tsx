@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
 import StockChart from './components/StockChart'
 import { StockPriceImport } from './pages/StockPriceImport'
+import { NewsImportPage } from './pages/NewsImportPage'
 import { StocksPage } from './pages/StocksPage'
 import { StockNewPage } from './pages/StockNewPage'
 import { StockChartPage } from './pages/StockChartPage'
@@ -54,6 +55,15 @@ function App() {
                 <span className="App-nav-link-icon">📤</span>
                 株価インポート
               </NavLink>
+              <NavLink
+                to="/news-import"
+                className={({ isActive }) =>
+                  isActive ? "App-nav-link active" : "App-nav-link"
+                }
+              >
+                <span className="App-nav-link-icon">📰</span>
+                ニュースインポート
+              </NavLink>
             </nav>
           </div>
         </header>
@@ -79,6 +89,7 @@ function App() {
               </>
             } />
             <Route path="/import" element={<StockPriceImport />} />
+            <Route path="/news-import" element={<NewsImportPage />} />
           </Routes>
         </main>
       </div>

@@ -54,6 +54,8 @@ export const StockSelector: React.FC<StockSelectorProps> = ({ onSelect, disabled
           stockId: data.data.stockId,
           stockCode: data.data.stockCode,
           stockName: data.data.stockName,
+          createdAt: data.data.createdAt,
+          updatedAt: data.data.updatedAt,
         };
         setStock(stockData);
         onSelect(stockData);

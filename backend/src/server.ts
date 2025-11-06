@@ -10,6 +10,7 @@ import { globalErrorHandler } from './utils/errorHandler';
 import { testDatabaseConnection, disconnectDatabase } from './config/database';
 import { stockImportRoutes } from './routes/stockImport';
 import { stockRoutes } from './routes/stocks';
+import { newsImportRoutes } from './routes/newsImport';
 
 /**
  * Fastifyサーバーインスタンスを作成
@@ -54,6 +55,7 @@ export async function createServer(): Promise<FastifyInstance> {
   // APIルート登録
   await server.register(stockImportRoutes, { prefix: '/api/v1' });
   await server.register(stockRoutes, { prefix: '/api/v1' });
+  await server.register(newsImportRoutes, { prefix: '/api/v1' });
 
   // Graceful shutdown
   const closeGracefully = async (signal: string) => {
