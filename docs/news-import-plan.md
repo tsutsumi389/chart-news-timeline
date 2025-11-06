@@ -1193,11 +1193,11 @@ model NewsImportHistory {
 
 ### Phase 3: フロントエンド基盤（2-3日）
 
-- [ ] 型定義作成（types/newsImport.ts）
-- [ ] ニュースインポートサービス実装（services/newsImportService.ts）
-- [ ] CSVパーサー実装（utils/csvParser.ts）
-- [ ] ニュースバリデーター実装（utils/newsValidator.ts）
-- [ ] カスタムフック実装（hooks/useNewsImport.ts）
+- [x] 型定義作成（types/newsImport.ts）
+- [x] ニュースインポートサービス実装（services/newsImportService.ts）
+- [x] CSVパーサー実装（utils/csvParser.ts）
+- [x] ニュースバリデーター実装（utils/newsValidator.ts）
+- [x] カスタムフック実装（hooks/useNewsImport.ts）
 
 ### Phase 4: フロントエンドコンポーネント実装（3-4日）
 

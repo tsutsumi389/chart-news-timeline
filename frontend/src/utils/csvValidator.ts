@@ -49,7 +49,7 @@ function isPastDate(dateString: string): boolean {
  */
 export function validateCsvRow(
   row: CsvRow,
-  rowIndex: number
+  _rowIndex: number
 ): string | null {
   // 日付形式チェック
   if (!isValidDate(row.date)) {
