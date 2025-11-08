@@ -16,28 +16,47 @@
 
 ## 主な機能
 
-### 1. データインポート機能
-- 株価データのインポート（CSV、JSON等）
-- ニュースデータのインポート（CSV、JSON等）
-- データの検証とエラーハンドリング
+### 1. 銘柄管理
+- 銘柄の新規登録
+- 銘柄一覧表示・検索（銘柄コード・名前）
+- 銘柄詳細情報の取得
 
-### 2. データ保存
+### 2. 株価データインポート
+- CSVファイルのアップロード
+- データ形式のバリデーション
+- 重複検出と処理（スキップ/上書き選択可能）
+- インポート結果のプレビュー表示
 - データベースへの永続化
-- 株価データとニュースデータの関連付け
 
-### 3. チャート表示
-- ローソク足チャートの描画
-- ニュース情報のタイムラインマーカー表示
+### 3. ニュースデータインポート
+- CSVファイルのアップロード
+- 日付範囲フィルタリング
+- センチメント分類（positive/negative/neutral）
+- 重複検出と処理（スキップ/上書き選択可能）
+- インポート結果のプレビュー表示
+- データベースへの永続化
+
+### 4. チャート表示
+- ローソク足チャートの描画（Apache ECharts）
+- 銘柄選択による株価データ表示
 - インタラクティブな操作（ズーム、パン等）
+- ニュース情報のタイムラインマーカー表示（実装済み）
 
 ## 技術スタック
 
 ### フロントエンド
 - **フレームワーク**: React + TypeScript
+- **ルーティング**: React Router v6
 - **チャートライブラリ**: Apache ECharts
 - **ビルドツール**: Vite
-- **状態管理**: React Hooks
+- **状態管理**: React Hooks（カスタムフック活用）
+- **スタイリング**: CSS Modules
 - **開発環境**: Docker + Docker Compose (Node.js 24)
+
+#### 主な実装コンポーネント
+- **Pages**: StocksPage, StockChartPage, StockNewPage, StockPriceImport, NewsImportPage
+- **Components**: StockChart, StockList, StockForm, CsvUploader, ImportProgress, ImportResult
+- **Custom Hooks**: useStockImport, useNewsImport
 
 #### 選定理由
 - **Apache ECharts**: 吹き出し機能（tooltip）が標準装備で、ニュースマーカー表示が容易
@@ -50,14 +69,24 @@
 - **フレームワーク**: Fastify
 - **ORM**: Prisma Client
 - **バリデーション**: Zod
-- **テスト**: Vitest
+- **テスト**: Vitest（ユニットテスト + E2Eテスト）
 - **開発環境**: Docker + Docker Compose
+
+#### 主な実装機能
+- **Routes**: stocks, stockImport, newsImport（RESTful API）
+- **Services**: stockService, stockPriceService, stockImportService, newsImportService
+- **CSV Parser**: csvParserService, newsCsvParserService
+- **Utils**: errorHandler, logger
 
 ### データベース
 - **RDBMS**: PostgreSQL 16 (Alpine)
 - **スキーマ管理**: Prisma
 - **データ永続化**: Docker Volume
-- **モデル**: Stock (株マスタ), StockPrice (株価OHLC), News (ニュース)
+- **モデル**:
+  - Stock（株マスタ）- 銘柄コード、銘柄名
+  - StockPrice（株価OHLC）- 日付、始値、高値、安値、終値、出来高
+  - News（ニュース）- 発行日時、タイトル、センチメント、URL
+- **リレーション**: Stock 1:N StockPrice, Stock 1:N News
 
 ## 開発環境
 
@@ -75,36 +104,31 @@ cd chart-news-timeline
 # 全コンテナをビルド
 docker compose build
 
+# データベースマイグレーション実行
+docker compose run --rm backend npx prisma migrate deploy
+
+# サンプルデータ投入（オプション）
+docker compose run --rm backend npm run db:seed
+
 # 全コンテナを起動（Watch モード）
 docker compose up --watch
 ```
 
 ### アクセスURL
 
+起動後、以下のURLでアクセスできます：
+
 - **フロントエンド**: http://localhost:5173
+  - `/` - 銘柄一覧
+  - `/stocks/new` - 銘柄新規登録
+  - `/stocks/:stockCode/chart` - チャート表示
+  - `/stocks/import` - 株価データインポート
+  - `/news/import` - ニュースデータインポート
 - **バックエンドAPI**: http://localhost:3000
+  - `/api/stocks` - 銘柄API
+  - `/api/stock-import` - 株価インポートAPI
+  - `/api/news-import` - ニュースインポートAPI
 - **PostgreSQL**: localhost:5432
-
-### Docker構成
-
-```
-┌─────────────────────────────────────────────────┐
-│              Docker Compose                     │
-├─────────────────────────────────────────────────┤
-│                                                 │
-│  ┌──────────────────┐    ┌──────────────────┐ │
-│  │   frontend       │    │   backend        │ │
-│  │  (React+Vite)    │◄───┤  (Node.js 24)    │ │
-│  │  Port: 5173      │    │  Port: 3000      │ │
-│  └──────────────────┘    └────────┬─────────┘ │
-│                                   │            │
-│                          ┌────────▼─────────┐ │
-│                          │   db             │ │
-│                          │  (PostgreSQL 16) │ │
-│                          │  Port: 5432      │ │
-│                          └──────────────────┘ │
-└─────────────────────────────────────────────────┘
-```
 
 ### よく使うコマンド
 
@@ -140,65 +164,3 @@ docker compose exec backend npm test                  # テスト実行
 docker compose exec backend npm run test:watch        # テストウォッチモード
 docker compose exec backend npm run test:coverage     # カバレッジレポート生成
 ```
-
-## プロジェクト構造
-
-```
-chart-news-timeline/
-├── frontend/                       # フロントエンド (React + Vite)
-│   ├── src/
-│   │   ├── components/            # Reactコンポーネント
-│   │   │   └── StockChart.tsx     # チャートコンポーネント
-│   │   ├── types/                 # TypeScript型定義
-│   │   │   └── stock.ts
-│   │   ├── utils/                 # ユーティリティ
-│   │   │   └── chartOptions.ts    # ECharts設定
-│   │   └── data/                  # サンプルデータ
-│   ├── Dockerfile
-│   └── package.json
-├── backend/                        # バックエンド (Fastify + Prisma)
-│   ├── src/
-│   │   ├── config/                # 設定ファイル
-│   │   │   └── database.ts        # Prismaクライアント設定
-│   │   ├── types/                 # TypeScript型定義
-│   │   │   ├── api.ts
-│   │   │   └── responses.ts
-│   │   ├── utils/                 # ユーティリティ
-│   │   │   ├── errorHandler.ts
-│   │   │   └── logger.ts
-│   │   ├── index.ts               # エントリーポイント
-│   │   └── server.ts              # Fastifyサーバー設定
-│   ├── prisma/
-│   │   ├── schema.prisma          # Prismaスキーマ定義
-│   │   └── seed.ts                # シードデータ
-│   ├── Dockerfile
-│   ├── package.json
-│   └── tsconfig.json
-├── compose.yml                     # Docker Compose設定
-├── docs/                           # ドキュメント
-│   ├── frontend-implementation-plan.md
-│   ├── backend-docker-setup-plan.md
-│   ├── database-schema.md
-│   └── api-implementation-plan.md
-├── CLAUDE.md                       # Claude Code用ガイド
-└── README.md
-```
-
-## 開発ステータス
-
-- ✅ フロントエンド環境構築完了
-- ✅ バックエンド環境構築完了
-- ✅ データベース環境構築完了
-- ✅ Docker Compose統合完了
-- ✅ Prisma ORM セットアップ完了
-- ✅ データベーススキーマ定義完了
-- ✅ バックエンド基盤実装完了（Fastifyサーバー、エラーハンドリング、ロガー）
-- ✅ ユニットテスト環境構築完了（Vitest）
-- ✅ フロントエンドチャート表示機能完了（サンプルデータ）
-- ⬜ APIエンドポイント実装（予定）
-- ⬜ フロントエンド・バックエンド統合（予定）
-- ⬜ データインポート機能実装（予定）
-
-## ライセンス
-
-（未定）
