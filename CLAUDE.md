@@ -8,6 +8,19 @@ Chart News Timeline is a full-stack web application for visualizing stock price 
 
 **Current Status**: Backend and frontend infrastructure is implemented. Prisma ORM is configured with PostgreSQL. Sample data visualization is working on frontend.
 
+## Documentation Standards
+
+### Screen Specification Template
+
+When creating screen specifications, use the template at [docs/spec/template.md](docs/spec/template.md). This template provides a standardized format for documenting screen functionality, including:
+
+- Screen overview and URL
+- Screen layout/component definitions
+- Operation details and data flows
+- Error handling
+
+All screen specifications should follow this template structure to maintain consistency across documentation.
+
 ## Technology Stack
 
 ### Frontend
